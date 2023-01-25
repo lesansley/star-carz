@@ -23,6 +23,5 @@ The list of intergalactic people can be filtered by characters contained in thei
 - React.js
 - Redux
 - NPM modules
-- the usage of CSS framework, CSS/HTML preprocessors is allowed
 - ESLint
 - MUI styled-components
