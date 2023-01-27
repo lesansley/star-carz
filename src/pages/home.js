@@ -1,7 +1,6 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getPeople } from "../api";
+import { fetchPeople } from "../api";
 
 const Home = () => {
   const {
@@ -12,44 +11,59 @@ const Home = () => {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery({
-    queryKey: ["people"],
-    queryFn: getPeople,
-    getNextPageParam: (lastPage) => {
-      if (lastPage.next) {
-        const nextUrl = lastPage.next;
-        const nextParam = nextUrl.substr(nextUrl.indexOf("=") + 1);
-        return nextParam;
-      }
-      return undefined;
-    },
+  } = useInfiniteQuery(["people"], fetchPeople, {
+    getNextPageParam: (lastPage) => lastPage.nextPage,
   });
 
-  if (status === "loading") return "Loading...";
+  const loadMoreRef = React.useRef();
 
-  if (status === "error") return "An error has occurred: " + error.message;
+  React.useEffect(() => {
+    if (isFetching || isFetchingNextPage) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => entry.isIntersecting && fetchNextPage()),
+      {
+        root: null,
+        margin: "0px",
+        treshold: 1.0,
+      }
+    );
+    const el = loadMoreRef && loadMoreRef.current;
+
+    if (!el) {
+      return;
+    }
+
+    observer.observe(el);
+  }, [fetchNextPage, isFetching, isFetchingNextPage]);
   return (
     <>
-      {data.pages.map((page, i) => (
-        <React.Fragment key={i}>
-          {page.results.map((person, i) => (
-            <p key={i}>{person.name}</p>
+      {status === "error" ? (
+        <p>`Error fetching data. Error: ${error.message}`</p>
+      ) : null}
+      {status === "loading" ? <p>Fetching data...</p> : null}
+      {status === "success" ? (
+        <div>
+          {data.pages.map((page, i) => (
+            <React.Fragment key={i}>
+              {page.response.map((person, i) => {
+                const isLastRecord = page.response.length === i + 1;
+                if (isLastRecord) {
+                  return (
+                    <p key={i} ref={loadMoreRef}>
+                      {person.name}
+                    </p>
+                  );
+                }
+                return <p key={i}>{person.name}</p>;
+              })}
+            </React.Fragment>
           ))}
-        </React.Fragment>
-      ))}
-      <div>
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? "Loading more..."
-            : hasNextPage
-            ? "Load More"
-            : "Nothing more to load"}
-        </button>
-      </div>
-      <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
+          <div>{hasNextPage ? "Fetching..." : null}</div>
+        </div>
+      ) : null}
     </>
   );
 };
