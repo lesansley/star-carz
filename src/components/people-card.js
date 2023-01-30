@@ -5,8 +5,12 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import PeopleCardElement from "./people-card-element";
+import Modal from "@mui/material/Modal";
+import VehicleCard from "./vehicle-card";
 
 const PeopleCard = ({ data }) => {
+  const [open, setOpen] = React.useState(false);
+
   const persona = (({ name, height, mass, gender, edited, vehicles }) => ({
     name,
     height,
@@ -16,9 +20,9 @@ const PeopleCard = ({ data }) => {
     vehicles,
   }))(data);
 
+  const handleClose = () => setOpen(false);
   const handleOnClick = (event) => {
-    event.preventDefault();
-    console.log("click");
+    setOpen(true);
   };
 
   const fields = Object.keys(persona);
@@ -31,11 +35,23 @@ const PeopleCard = ({ data }) => {
           </div>
         ))}
       </CardContent>
-      <CardActions sx={{ display: "block" }}>
-        <Button size="large" onClick={handleOnClick} variant="contained">
-          Vehicles
-        </Button>
-      </CardActions>
+      {persona.vehicles.length > 0 ? (
+        <>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="Vehicles"
+            aria-describedby="Description of vehicles"
+          >
+            <VehicleCard vehicles={persona.vehicles} />
+          </Modal>
+          <CardActions sx={{ display: "block" }}>
+            <Button size="large" onClick={handleOnClick} variant="contained">
+              Vehicles
+            </Button>
+          </CardActions>
+        </>
+      ) : null}
     </React.Fragment>
   );
   return (
