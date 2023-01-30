@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { dateTimeFromISODate } from "../helpers";
+import { UNITS } from "../config";
 
 const PeopleCardElement = ({ field, value, handleOnClick }) => {
   switch (field) {
@@ -20,7 +21,7 @@ const PeopleCardElement = ({ field, value, handleOnClick }) => {
     default:
       return (
         <Typography variant="body2">
-          {field}: {value}
+          {field}: {value} {UNITS[field] ? UNITS[field] : null}
         </Typography>
       );
   }
