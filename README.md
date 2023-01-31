@@ -12,8 +12,8 @@ The deployed site can be viewed [here](https://profound-cobbler-0b52dd.netlify.a
   - mass
   - gender
   - edited
-- Display a `Show vehicles` (button)
-- When the user clicks the `Show vehicles` button a popup is displayed that contains a list of bodacious vehicles with the following information
+- Display a `Vehicles` (button)
+- When the user clicks the `Vehicles` button a popup is displayed that contains a list of bodacious vehicles with the following information
   - name
   - model
   - manufacturer
