@@ -62,7 +62,7 @@ const SearchBar = () => {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed" component="nav">
         <Toolbar sx={{ alignItems: "left" }}>
           <Typography
             variant="h6"
@@ -91,6 +91,7 @@ const SearchBar = () => {
           </Search>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </Box>
   );
 };
