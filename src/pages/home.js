@@ -1,5 +1,5 @@
 import React from "react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

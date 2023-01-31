@@ -33,7 +33,7 @@ const PeopleCard = ({ data }) => {
 
   const fields = Object.keys(persona);
   const card = (
-    <React.Fragment>
+    <>
       <CardContent>
         {fields.map((field, index) => (
           <div key={index}>
@@ -59,9 +59,9 @@ const PeopleCard = ({ data }) => {
         </>
       ) : null}
       <Typography variant="caption" display="block" gutterBottom>
-        Edited on <em>{dateTimeFromISODate(persona.edited)}</em>
+        Last edited on <em>{dateTimeFromISODate(persona.edited)}</em>
       </Typography>
-    </React.Fragment>
+    </>
   );
   return (
     <Box sx={{ maxWidth: 400 }}>

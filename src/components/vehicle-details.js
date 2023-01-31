@@ -15,19 +15,22 @@ const VehicleDetails = ({ data }) => {
     manufacturer,
     vehicle_class,
   }))(data);
+
   const fields = Object.keys(vehicle);
-  const card = (
-    <React.Fragment>
-      <CardContent>
-        {fields.map((field, index) => (
-          <div key={index}>
-            <CardElement field={field} value={vehicle[field]} />
-          </div>
-        ))}
-      </CardContent>
-    </React.Fragment>
+
+  return (
+    <div>
+      <>
+        <CardContent>
+          {fields.map((field, index) => (
+            <div key={index}>
+              <CardElement field={field} value={vehicle[field]} />
+            </div>
+          ))}
+        </CardContent>
+      </>
+    </div>
   );
-  return <div>{card}</div>;
 };
 
 export default VehicleDetails;
