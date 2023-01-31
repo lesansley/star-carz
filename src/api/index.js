@@ -9,4 +9,10 @@ const fetchPeople = async ({
   return { response: results, nextPage: next };
 };
 
-export { fetchPeople };
+const fetchVehicles = async ({ queryKey }) => {
+  const request = await fetch(queryKey[1]);
+  const results = await request.json();
+  return { response: results };
+};
+
+export { fetchPeople, fetchVehicles };

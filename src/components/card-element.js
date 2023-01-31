@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import { dateTimeFromISODate } from "../helpers";
 import { UNITS } from "../config";
 
-const PeopleCardElement = ({ field, value, handleOnClick }) => {
+const CardElement = ({ field, value, handleOnClick }) => {
   switch (field) {
     case "name":
       return (
@@ -18,6 +18,8 @@ const PeopleCardElement = ({ field, value, handleOnClick }) => {
       );
     case "vehicles":
       return null;
+    case "vehicle_class":
+      return <Typography variant="body2">class: {value}</Typography>;
     default:
       return (
         <Typography variant="body2">
@@ -27,4 +29,4 @@ const PeopleCardElement = ({ field, value, handleOnClick }) => {
   }
 };
 
-export default PeopleCardElement;
+export default CardElement;
