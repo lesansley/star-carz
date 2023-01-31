@@ -1,6 +1,6 @@
 # Starz 'n Carz
 
-This project is a mobile-friendly, responsive, one-page application that shows a list of intergalatic people and the vehicles they drive. The data displayed are available from [SWAPI](https://swapi.dev/) - The Star Wars API.
+This project is a mobile-friendly, responsive, one-page application that displays a list of intergalatic characters and the vehicles they drive. The data displayed are available from [SWAPI](https://swapi.dev/) - The Star Wars API.
 
 The deployed site can be viewed [here](https://profound-cobbler-0b52dd.netlify.app/).
 
