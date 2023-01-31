@@ -1,5 +1,4 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -7,37 +6,13 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import CardElement from "./card-element";
 import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 import VehicleCard from "./vehicle-card";
-import { fetchVehicles } from "../api";
 
-const testVehicles = [
-  {
-    name: "Imperial Speeder Bike",
-    model: "74-Z speeder bike",
-    manufacturer: "Aratech Repulsor Company",
-    cost_in_credits: "8000",
-    length: "3",
-    max_atmosphering_speed: "360",
-    crew: "1",
-    passengers: "1",
-    cargo_capacity: "4",
-    consumables: "1 day",
-    vehicle_class: "speeder",
-    pilots: [
-      "https://swapi.dev/api/people/1/",
-      "https://swapi.dev/api/people/5/",
-    ],
-    films: ["https://swapi.dev/api/films/3/"],
-    created: "2014-12-18T11:20:04.625000Z",
-    edited: "2014-12-20T21:30:21.693000Z",
-    url: "https://swapi.dev/api/vehicles/30/",
-  },
-];
+import { dateTimeFromISODate } from "../helpers";
 
 const PeopleCard = ({ data }) => {
   const [open, setOpen] = React.useState(false);
-  const [vehicles, setVehicles] = React.useState();
-  const [arrayOfVehicleURLs, setArrayOfVehicleURLs] = React.useState();
 
   const persona = (({ name, height, mass, gender, edited, vehicles }) => ({
     name,
@@ -47,10 +22,6 @@ const PeopleCard = ({ data }) => {
     edited,
     vehicles,
   }))(data);
-
-  React.useState(() => {
-    setArrayOfVehicleURLs(persona.vehicles);
-  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -78,15 +49,18 @@ const PeopleCard = ({ data }) => {
             aria-labelledby="Vehicles"
             aria-describedby="Description of vehicles"
           >
-            <VehicleCard urls={arrayOfVehicleURLs} />
+            <VehicleCard queryUrlArray={persona.vehicles} />
           </Modal>
           <CardActions sx={{ display: "block" }}>
             <Button size="large" onClick={handleOnClick} variant="contained">
-              Vehicles
+              {persona.vehicles.length === 1 ? `Vehicle` : `Vehicles`}
             </Button>
           </CardActions>
         </>
       ) : null}
+      <Typography variant="caption" display="block" gutterBottom>
+        Edited on <em>{dateTimeFromISODate(persona.edited)}</em>
+      </Typography>
     </React.Fragment>
   );
   return (

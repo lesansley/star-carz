@@ -10,9 +10,13 @@ const fetchPeople = async ({
 };
 
 const fetchVehicles = async ({ queryKey }) => {
-  const request = await fetch(queryKey[1]);
-  const results = await request.json();
-  return { response: results };
+  try {
+    const request = await fetch(queryKey[1]);
+    return await request.json();
+  } catch (err) {
+    console.error(`Network error: ${err.message}`);
+    return null;
+  }
 };
 
 export { fetchPeople, fetchVehicles };

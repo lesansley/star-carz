@@ -1,5 +1,4 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import Box from "@mui/material/Box";
 import VehicleDetails from "./vehicle-details";
 import { fetchVehicles } from "../api";
@@ -15,23 +14,30 @@ const boxStyle = {
   p: 4,
 };
 
-const VehicleCard = React.forwardRef(({ urls }, ref) => {
-  const vehicleURL = urls[0];
-  const { status, data, error } = useQuery({
-    queryKey: ["vehicle", vehicleURL],
-    queryFn: fetchVehicles,
-  });
+const VehicleCard = React.forwardRef(({ queryUrlArray }, ref) => {
+  const [vehicleArray, setVehicleArray] = React.useState([]);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const result = await Promise.all(
+        queryUrlArray.map(async (queryParam) => {
+          return await fetchVehicles({ queryKey: ["vehicles", queryParam] });
+        })
+      );
+      setVehicleArray(result);
+    }
+    fetchData();
+  }, [queryUrlArray]);
+
   return (
     <>
-      {status === "error" ? (
-        <p>`Error fetching data. Error: ${error.message}`</p>
-      ) : null}
-      {status === "loading" ? <p>Fetching data...</p> : null}
-      {status === "success" ? (
+      {vehicleArray.length === 0 ? null : (
         <Box sx={boxStyle} ref={ref} tabIndex="-1">
-          <VehicleDetails data={data.response} />
+          {vehicleArray.map((vehicle, index) => (
+            <VehicleDetails key={index} data={vehicle} />
+          ))}
         </Box>
-      ) : null}
+      )}
     </>
   );
 });
