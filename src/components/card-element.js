@@ -1,5 +1,4 @@
 import Typography from "@mui/material/Typography";
-import { dateTimeFromISODate } from "../helpers";
 import { UNITS } from "../config";
 
 const CardElement = ({ field, value, handleOnClick }) => {
@@ -10,20 +9,20 @@ const CardElement = ({ field, value, handleOnClick }) => {
           {value}
         </Typography>
       );
-    case "edited":
+    case "vehicle_class":
       return (
-        <Typography variant="body2">
-          {field}: {dateTimeFromISODate(value)}
+        <Typography variant="body1">
+          <strong>class</strong>: {value}
         </Typography>
       );
+    case "edited":
+      return null;
     case "vehicles":
       return null;
-    case "vehicle_class":
-      return <Typography variant="body2">class: {value}</Typography>;
     default:
       return (
-        <Typography variant="body2">
-          {field}: {value} {UNITS[field] ? UNITS[field] : null}
+        <Typography variant="body1">
+          <strong>{field}</strong>: {value} {UNITS[field] ? UNITS[field] : null}
         </Typography>
       );
   }
