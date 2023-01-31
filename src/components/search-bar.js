@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
+import useSearch from "../hooks/useSearch";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,14 +52,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBar = () => {
-  const handleInputChange = (event) => {
-    console.log(event.target.value);
-  };
+  const [, setSearch] = useSearch();
+  const searchRef = React.useRef();
+  const queryClient = useQueryClient();
 
   const handleOnClick = (event) => {
-    console.log("clicked");
+    queryClient.cancelQueries({ queryKey: ["people"] });
+    setSearch(() => searchRef.current.children[0].value);
   };
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -72,9 +74,14 @@ const SearchBar = () => {
           </Typography>
           <Search sx={{ alignItems: "left" }}>
             <StyledInputBase
-              onChange={handleInputChange}
+              ref={searchRef}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleOnClick();
+                }
+              }}
             />
             <Button onClick={handleOnClick}>
               <SearchIconWrapper>
