@@ -2,7 +2,7 @@
 
 This project is a mobile-friendly, responsive, one-page application that shows a list of intergalatic people and the vehicles they drive. The data displayed are available from [SWAPI](https://swapi.dev/) - The Star Wars API.
 
-The depolyed site can be viewed [here](https://63d974dfbf4f6d28ce21c9e4--profound-cobbler-0b52dd.netlify.app/).
+The deployed site can be viewed [here](https://63d974dfbf4f6d28ce21c9e4--profound-cobbler-0b52dd.netlify.app/).
 
 ## The requirements
 
