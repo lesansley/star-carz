@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import VehicleDetails from "./vehicle-details";
 import { fetchVehicles } from "../api";
 
@@ -31,13 +32,15 @@ const VehicleCard = React.forwardRef(({ queryUrlArray }, ref) => {
 
   return (
     <>
-      {vehicleArray.length === 0 ? null : (
-        <Box sx={boxStyle} ref={ref} tabIndex="-1">
-          {vehicleArray.map((vehicle, index) => (
+      <Box sx={boxStyle} ref={ref} tabIndex="-1">
+        {vehicleArray.length === 0 ? (
+          <CircularProgress />
+        ) : (
+          vehicleArray.map((vehicle, index) => (
             <VehicleDetails key={index} data={vehicle} />
-          ))}
-        </Box>
-      )}
+          ))
+        )}
+      </Box>
     </>
   );
 });
