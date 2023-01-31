@@ -11,7 +11,9 @@ import "./index.css";
 import store from "./app/store";
 
 import App from "./App";
+
 const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
