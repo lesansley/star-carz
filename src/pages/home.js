@@ -8,6 +8,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import useEffectOnce from "../hooks/useEffectOnce";
 import useSearch from "../hooks/useSearch";
 import PeopleCard from "../components/people-card";
+import NoRecords from "../components/no-records";
 
 import {
   selectPeople,
@@ -35,11 +36,11 @@ const Home = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView, hasNextPage]);
-
   return (
     <>
       {status === "error" && <p>`Error fetching data. Error:${error}`</p>}
-      {status === "pending" && !data.length && <p>Fetching data...</p>}
+      {status === "pending" && data.length === 0 && <p>Fetching data...</p>}
+      {status === "fulfilled" && data.length === 0 && <NoRecords />}
       {(status === "fulfilled" || status === "pending") && (
         <div>
           <div>
