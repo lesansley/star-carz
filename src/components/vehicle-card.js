@@ -2,7 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import VehicleDetails from "./vehicle-details";
-import { fetchVehicles } from "../api";
+import { client } from "../api/client";
+import useEffectOnce from "../hooks/useEffectOnce";
 
 const boxStyle = {
   position: "absolute",
@@ -17,19 +18,18 @@ const boxStyle = {
 
 const VehicleCard = React.forwardRef(({ queryUrlArray }, ref) => {
   const [vehicleArray, setVehicleArray] = React.useState([]);
-
-  React.useEffect(() => {
-    async function fetchData() {
+  useEffectOnce(() => {
+    async function fetchVehicles() {
       const result = await Promise.all(
         queryUrlArray.map(async (queryParam) => {
-          return await fetchVehicles({ queryKey: ["vehicles", queryParam] });
+          const query = queryParam.substring(queryParam.search("/api") + 4);
+          return await client(query);
         })
       );
       setVehicleArray(result);
     }
-    fetchData();
+    fetchVehicles();
   }, [queryUrlArray]);
-
   return (
     <>
       <Box sx={boxStyle} ref={ref} tabIndex="-1">
@@ -37,7 +37,7 @@ const VehicleCard = React.forwardRef(({ queryUrlArray }, ref) => {
           <CircularProgress />
         ) : (
           vehicleArray.map((vehicle, index) => (
-            <VehicleDetails key={index} data={vehicle} />
+            <VehicleDetails key={index} data={vehicle.data} />
           ))
         )}
       </Box>
