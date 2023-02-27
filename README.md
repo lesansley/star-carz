@@ -2,6 +2,20 @@
 
 This project is a mobile-friendly, responsive, one-page application that displays a list of intergalatic characters and the vehicles they drive. The data displayed are available from [SWAPI](https://swapi.dev/) - The Star Wars API.
 
+The project is written in React.js and displays asynchronous loading of data from the external API and uses Redux for state management. It involves the following components:
+
+React Components: The project includes several React components that are responsible for displaying data fetched from an external API. These components are designed to render the data as soon as it is available, and they include UI elements such as loading spinners to indicate when the data is being fetched.
+
+Redux Store: The project uses a Redux store to manage application state. This store contains all of the data retrieved from the external API, as well as any other application state that needs to be managed, such as whether data is currently being fetched or not.
+
+Redux Actions: The project defines Redux actions that are responsible for fetching data from the external API. These actions are dispatched by the React components when they need to retrieve data, and they trigger an asynchronous request to the API using `fetch`.
+
+Redux Reducers: The project defines Redux reducers that are responsible for updating the application state in response to Redux actions. These reducers  update the store with the data retrieved from the API, and they also update any other application state as needed.
+
+Middleware: The project uses redux-thunk middleware to handle the asynchronous nature of API requests and to dispatch Redux actions in response to API responses.
+
+Overall, the project provides a dynamic user interface that displays data as it is asynchronously fetched from an external API, while also using Redux to manage state and ensure that the application remains responsive and performant.
+
 The deployed site can be viewed [here](https://profound-cobbler-0b52dd.netlify.app/).
 
 ## The requirements
