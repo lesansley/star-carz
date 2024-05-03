@@ -1,6 +1,6 @@
 # Starz 'n Carz
 
-This project is a mobile-friendly, responsive, one-page application that displays a list of intergalatic characters and the vehicles they drive. The data displayed are available from [SWAPI](https://swapi.dev/) - The Star Wars API.
+This project is a mobile-friendly, responsive, one-page application that displays a list of intergalactic characters and the vehicles they drive. The data displayed are available from [SWAPI](https://swapi.dev/) - The Star Wars API.
 
 The project is written in React.js and displays asynchronous loading of data from the external API and uses Redux for state management. It involves the following components:
 
